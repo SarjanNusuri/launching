@@ -23,22 +23,30 @@ const COLORS = [
   "167, 139, 250",
 ];
 
+const panels = [
+  { title: "Kepala Sekolah", name: "Andi Pratama", label: "Kepsek" },
+  { title: "Rektor UNG", name: "Budi Santoso", label: "Rektor" },
+  // { title: "Kepala Desa", name: "Hasanudin", label: "Kades" },
+  { title: "Kepala Dinas", name: "Rahmat", label: "Kadis" },
+];
+
 export default function Home() {
-  const [placed, setPlaced] = useState([false, false, false, false]);
+  const panelCount = panels.length;
+  const [placed, setPlaced] = useState(Array(panelCount).fill(false));
   const [isScanning, setIsScanning] = useState(false);
   const [scanComplete, setScanComplete] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const placedRef = useRef([false, false, false, false]);
+  const placedRef = useRef(Array(panelCount).fill(false));
 
-  const allPlaced = placed.every(Boolean);
+  const allPlaced = placed.length > 0 && placed.every(Boolean);
 
-  const panels = [
-    { title: "Direktur Utama", name: "Andi Pratama", label: "CEO" },
-    { title: "Direktur", name: "Budi Santoso", label: "Direktur" },
-    { title: "Kepala Desa", name: "Hasanudin", label: "Kades" },
-    { title: "Kepala Dusun", name: "Rahmat", label: "Kadus" },
-  ];
+  useEffect(() => {
+    if (placed.length !== panelCount) {
+      placedRef.current = Array(panelCount).fill(false);
+      setPlaced(Array(panelCount).fill(false));
+    }
+  }, [panelCount, placed.length]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -146,7 +154,7 @@ export default function Home() {
           audioRef.current.pause();
           audioRef.current.currentTime = 0;
         }
-        window.location.href = "https://gg.com";
+        window.location.href = "https://cobahotel.gt.tc/";
       }, 5200);
       return () => {
         clearTimeout(scanTimer);
@@ -166,15 +174,15 @@ export default function Home() {
   );
 
   const resetAll = useCallback(() => {
-    placedRef.current = [false, false, false, false];
-    setPlaced([false, false, false, false]);
+    placedRef.current = Array(panelCount).fill(false);
+    setPlaced(Array(panelCount).fill(false));
     setIsScanning(false);
     setScanComplete(false);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-  }, []);
+  }, [panelCount]);
 
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden select-none bg-black">
@@ -272,8 +280,8 @@ export default function Home() {
           Website resmi EDOTEL SMKN 2 GORONTALO
         </p>
 
-        {/* Hand panels - 2x2 grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 max-w-5xl">
+        {/* Hand panels */}
+        <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center">
           {panels.map((panel, i) => (
             <div key={i} className="flex flex-col items-center gap-3">
               <div className="text-center">
@@ -340,7 +348,7 @@ export default function Home() {
             <div className="w-1 h-1 rounded-full bg-white/20" />
           </div>
           <p className="text-[10px] text-white/30 font-mono tracking-wider">
-            Ketuk keempat panel untuk meresmikan peluncuran
+            Ketuk {panelCount} panel untuk meresmikan peluncuran
           </p>
         </div>
       </div>
