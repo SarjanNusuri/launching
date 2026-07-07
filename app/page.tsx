@@ -144,18 +144,17 @@ export default function Home() {
   useEffect(() => {
     if (allPlaced) {
       setIsScanning(true);
-      audioRef.current?.play();
 
       const scanTimer = setTimeout(() => {
         setScanComplete(true);
-      }, 4000);
+      }, 4500);
       const navTimer = setTimeout(() => {
         if (audioRef.current) {
           audioRef.current.pause();
           audioRef.current.currentTime = 0;
         }
-        window.location.href = "https://cobahotel.gt.tc/";
-      }, 5200);
+        window.location.href = "https://edotelsmkn2gorontalo.com/";
+      }, 5800);
       return () => {
         clearTimeout(scanTimer);
         clearTimeout(navTimer);
@@ -167,6 +166,10 @@ export default function Home() {
     (index: number) => {
       if (!placedRef.current[index] && !isScanning) {
         placedRef.current[index] = true;
+        const allPlacedNow = placedRef.current.every(Boolean);
+        if (allPlacedNow) {
+          audioRef.current?.play().catch(() => {});
+        }
         setPlaced([...placedRef.current]);
       }
     },
@@ -185,8 +188,11 @@ export default function Home() {
   }, [panelCount]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden select-none bg-black">
-      <audio ref={audioRef} src="/soundtrack.aac" loop preload="auto" />
+    <div
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden select-none bg-black"
+      style={{ touchAction: "none", WebkitTouchCallout: "none" }}
+    >
+      <audio ref={audioRef} src="/fixsound.mp3" loop preload="auto" />
 
       {/* Hotel background */}
       <div className="absolute inset-0 bg-black">
@@ -210,7 +216,11 @@ export default function Home() {
 
       {/* Scanning overlay */}
       {isScanning && (
-        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div
+          className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm select-none"
+          style={{ touchAction: "none", WebkitTouchCallout: "none" }}
+          onContextMenu={(e) => e.preventDefault()}
+        >
           {!scanComplete ? (
             <>
               <div className="absolute inset-x-0 h-px bg-amber-400 shadow-[0_0_20px_rgba(251,191,36,0.6)] animate-scan-line" />
@@ -231,7 +241,11 @@ export default function Home() {
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center animate-fade-in-up">
+            <div
+              className="flex flex-col items-center animate-fade-in-up select-none"
+              style={{ touchAction: "none", WebkitTouchCallout: "none" }}
+              onContextMenu={(e) => e.preventDefault()}
+            >
               <div className="w-16 h-16 border-2 border-amber-400 rounded-full flex items-center justify-center mb-6 animate-success-pulse">
                 <svg
                   className="w-8 h-8 text-amber-400"
@@ -267,7 +281,7 @@ export default function Home() {
           <div className="flex items-center gap-2 justify-center mb-4">
             <div className="w-px h-4 bg-amber-400/40" />
             <span className="text-[10px] tracking-[0.4em] text-amber-400/70 font-mono uppercase">
-              Grand Opening
+              PENDIDIKAN TEKNOLOGI INFORMASI UNG MENGAJAR BATCH 9
             </span>
             <div className="w-px h-4 bg-amber-400/40" />
           </div>
@@ -298,6 +312,7 @@ export default function Home() {
               </div>
               <button
                 onPointerDown={() => handleTap(i)}
+                onContextMenu={(e) => e.preventDefault()}
                 disabled={isScanning}
                 className="group relative w-28 h-36 sm:w-36 sm:h-44 md:w-40 md:h-48 active:scale-95 active:duration-75"
               >
@@ -351,6 +366,11 @@ export default function Home() {
             Ketuk {panelCount} panel untuk meresmikan peluncuran
           </p>
         </div>
+      </div>
+
+      {/* Watermark */}
+      <div className="fixed bottom-3 right-4 z-30 text-[9px] text-white/20 font-mono tracking-[0.15em] select-none">
+        PTI_UNG_MENGAJAR_BATCH_9
       </div>
 
       {/* Reset */}
