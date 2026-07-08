@@ -238,7 +238,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-center text-4xl sm:text-5xl lg:text-7xl font-light text-white mb-2 tracking-tight">Grand Launching</h1>
-        <p className="text-center text-lg md:text-xl mb-5 text-amber-400/80 font-light tracking-wide">Website resmi EDOTEL SMKN 2 GORONTALO</p>
+        <p className="text-center text-lg md:text-xl mb-5 text-amber-400/80 font-light tracking-wide">Website resmi edOTEL SMKN 2 GORONTALO</p>
 
         {/* Hand panels */}
         <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 justify-center">
