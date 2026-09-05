@@ -157,7 +157,7 @@ export default function Home() {
           audioRef.current.pause();
           audioRef.current.currentTime = 0;
         }
-        window.location.href = "http://127.0.0.1:8000/";
+        window.location.href = "https://dezakat.site/";
       }, 5800);
       return () => {
         clearTimeout(scanTimer);
@@ -215,7 +215,7 @@ export default function Home() {
           audioRef.current.pause();
           audioRef.current.currentTime = 0;
         }
-        window.location.href = "http://127.0.0.1:8000/";
+        window.location.href = "https://dezakat.site/";
       }, 5800);
 
       autoPlayRef.current = false;
@@ -224,7 +224,8 @@ export default function Home() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Enter" && !isScanning && !autoPlayRef.current) handleAutoPlay();
+      if (e.key === "Enter" && !isScanning && !autoPlayRef.current)
+        handleAutoPlay();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
